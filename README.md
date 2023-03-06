@@ -4,9 +4,11 @@
 
 ### Specification
 
+----
+
 My main goal is to create a Task manager to handle sprints for a company.
 
-The company's admin can manage Projects (CRUD functions) and set Project admins for each project. The projects can be viewed in an overview table.
+The company's admin can manage Projects (CRUD functions) and set Project admins for each project. The admin can register new developers. The projects can be viewed in an overview table.
 
 Each project uses sprint as a unit of time management. Project admins can manage the sprint's data (length, start/end date, developers) on an admin page.
 
@@ -25,6 +27,7 @@ For every sprint, the developers can add Work items to handle the project develo
 Each Work item has a:
 - Title
 - Description
+- Developer
 - State: New/Active/Resolved/Closed
 - Log data(eg.: estimated/remaining hours)
 - Branch name
@@ -38,6 +41,8 @@ All work items are displayed in a hierarchical tree list on the Backlogs page.
 All work items are displayed for the selected sprint on a Kanban board like page, where the developers can drag and drop the Tasks/Bugs to another state.
 
 ### Weekly schedule
+
+----
 
 >1. Project specification, DB Scheme, Mock-ups, Weekly schedule, Git init
 
@@ -71,6 +76,44 @@ All work items are displayed for the selected sprint on a Kanban board like page
 
 ### DB Scheme
 
+----
 
+Employee:
+- Name
+- RegistrationDate
+- IsActive
+- Capacity (1/0.75/0.5) 
+- Role (Admin/Developer)
+
+Project:
+- Name
+- StartDate
+- EndDate
+- ProjectAdmin (Employee)
+- Developers (`List<Employee>`)
+- Sprints (`List<Sprint>`)
+
+Sprint:
+- StartDate
+- EndDate
+- WorkDayCount
+- DeveloperCapacities (`List<DeveloperCapacity>`)
+
+DeveloperCapacity:
+- EmployeeId
+- CapacityHour (per week)
+
+WorkItem:
+- Title
+- Description
+- Files?
+- EmployeeId
+- State: New/Active/Resolved/Closed
+- OriginalEstimatedHours
+- HoursLogged
+- BranchName
+- PullRequestLink
+- ParentItem
 
 ### Mock-ups
+
