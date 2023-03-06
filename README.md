@@ -16,13 +16,13 @@ For every sprint, the developers can add Work items to handle the project develo
 
 > EPIC
 
-> ---- Feature
+> ------ Feature
 
-> ------------ User Story
+> --------------- User Story
 
-> ----------------------- Task
+> ---------------------------- Task
 
-> ----------------------- Bug
+> ---------------------------- Bug
 
 Each Work item has a:
 - Title
@@ -64,9 +64,9 @@ All work items are displayed for the selected sprint on a Kanban board like page
 
 >10. Backlogs page impementation
 
->11. Sprint Board implementation
+>11. Sprint Task Board implementation
 
->12. Sprint Board implementation
+>12. Sprint Task Board implementation
 
 >13. Test, test, test
 
@@ -87,9 +87,10 @@ Employee:
 
 Project:
 - Name
+- Description
 - StartDate
 - EndDate
-- ProjectAdmin (Employee)
+- ProjectAdmin (`Employee`)
 - Developers (`List<Employee>`)
 - Sprints (`List<Sprint>`)
 
@@ -117,3 +118,14 @@ WorkItem:
 
 ### Mock-ups
 
+Project Overview Page
+
+![Project Overview Page](./mockups/projects.png)
+
+Backlog Page
+
+![https://www.kevinrchant.com/2020/12/03/viewing-agile-and-scrum-work-items-at-the-same-time-in-azure-devops/](./mockups/backlog.png)
+
+Sprint Task Board:
+
+![Sprint Task Board](./mockups/task_board.jpg)
