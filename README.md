@@ -13,9 +13,13 @@ Each project uses sprint as a unit of time management. Project admins can manage
 For every sprint, the developers can add Work items to handle the project development. The work items are arranged hierarchically:
 
 > EPIC
+
 > ---- Feature
+
 > ------------ User Story
+
 > ----------------------- Task
+
 > ----------------------- Bug
 
 Each Work item has a:
