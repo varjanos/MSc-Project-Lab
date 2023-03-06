@@ -11,14 +11,11 @@ The company's admin can manage Projects (CRUD functions) and set Project admins 
 Each project uses sprint as a unit of time management. Project admins can manage the sprint's data (length, start/end date, developers) on an admin page.
 
 For every sprint, the developers can add Work items to handle the project development. The work items are arranged hierarchically:
+
 > EPIC
-
 > ---- Feature
-
 > ------------ User Story
-
 > ----------------------- Task
-
 > ----------------------- Bug
 
 Each Work item has a:
@@ -29,6 +26,12 @@ Each Work item has a:
 - Branch name
 - PR link
 - Parent item
+
+All work items are displayed in a basic table view on the Work Item's list page.
+
+All work items are displayed in a hierarchical tree list on the Backlogs page.
+
+All work items are displayed for the selected sprint on a Kanban board like page, where the developers can drag and drop the Tasks/Bugs to another state.
 
 ### Weekly schedule
 
@@ -56,9 +59,11 @@ Each Work item has a:
 
 >12. Sprint Board implementation
 
->13. Project and Task export to PDF
+>13. Test, test, test
 
->14. Test, test, test
+>14. Documentation
+
+>+ Optional task:  Project and Task export to PDF
 
 ### DB Scheme
 
