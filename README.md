@@ -66,6 +66,7 @@ class Plan
     string Name;
     int BaseWidth;
     int BaseLength;
+    DateTimeOffset CreationDate;
     List<Floor> Floors;
 }
 
@@ -74,6 +75,7 @@ class Floor
     int Id;
     int Width;
     int Length;
+    DateTimeOffset LastModificationDate;
     List<BuildingObject> BuildingObjects;
     List<Furniture> Furnitures;
 }
