@@ -1,131 +1,104 @@
 # MSc-Project-Laboratory 1-2
 
-## Sprint based Task manager
+## FloorPlanner ASP.NET + Blazor application
 
 ### Specification
 
 ----
 
-My main goal is to create a Task manager to handle sprints for a company.
+My main goal is to create a FloorPlanner application, where the authenticated users can create their own floorplans and manage them.
 
-The company's admin can manage Projects (CRUD functions) and set Project admins for each project. The admin can register new developers. The projects can be viewed in an overview table.
+The application uses .NET's Identity server for authentication, the users must register first, then they can log in.
 
-Each project uses sprint as a unit of time management. Project admins can manage the sprint's data (length, start/end date, developers) on an admin page.
+The user can drag and drop pre-defined items from a menu to the floors.
 
-For every sprint, the developers can add Work items to handle the project development. The work items are arranged hierarchically:
+### Planned functionalities:
 
-> EPIC
+- User authentication
+- Storing plans, with possible multiple floors
+- Exporting plans to custom excel file
+- Adding walls, windows and doors to the floor
+- Adding furniture to the floor
+- Optional:
+    - Importing own custom file
+    - Creating custom furniture
+    - Multiuser view
 
-> ------ Feature
+### Wireframes
 
-> --------------- User Story
+----
 
-> ---------------------------- Task
-
-> ---------------------------- Bug
-
-Each Work item has a:
-- Title
-- Description
-- Developer
-- State: New/Active/Resolved/Closed
-- Log data(eg.: estimated/remaining hours)
-- Branch name
-- PR link
-- Parent item
-
-All work items are displayed in a basic table view on the Work Item's list page.
-
-All work items are displayed in a hierarchical tree list on the Backlogs page.
-
-All work items are displayed for the selected sprint on a Kanban board like page, where the developers can drag and drop the Tasks/Bugs to another state.
+Wireframes can be found on this [Figma page](https://www.figma.com/file/T7iCeyFWDbHn5t4UU6zhn2/FloorPlanner?t=xHwSmCKcp177H2HJ-1).
 
 ### Weekly schedule
 
 ----
 
->1. Project specification, DB Scheme, Mock-ups, Weekly schedule, Git init
+>4. Project specification, DB Scheme, Wireframes, Weekly schedule, Git init
 
->2. Project (ASP.NET + BLazor), nswag and DB init
+>5. Project (ASP.NET + BLazor), nswag and DB init, Identity server based Authentication, login + registration implementation
 
->3. Authentication (Identity based server), login + registration implementation
+>6. Translations, creaing DB entities,  
 
->4. Role based authorization (Admin, Project Admin, User)
-
->5. DB scheme init
-
->6. Project overview page implementation
-
->7. Project overview/manager page implementation
-
->8. Sprint's admin page implementation
-
->9. Work Items page implementation 
-
->10. Backlogs page impementation
-
->11. Sprint Task Board implementation
-
->12. Sprint Task Board implementation
+>7. // TODO
 
 >13. Test, test, test
 
 >14. Documentation
 
->+ Optional task:  Project and Task export to PDF
-
 ### DB Scheme
 
 ----
 
-Employee:
-- Name
-- RegistrationDate
-- IsActive
-- Capacity (1/0.75/0.5) 
-- Role (Admin/Developer)
+```cs
+class UserProfile
+{
+    int Id;
+    string Name;
+    DateTimeOffset RegistrationDate;
+    Language Language;
+    List<Plan> Plans;
+}
 
-Project:
-- Name
-- Description
-- StartDate
-- EndDate
-- ProjectAdmin (`Employee`)
-- Developers (`List<Employee>`)
-- Sprints (`List<Sprint>`)
+class Plan
+{
+    int Id;
+    string Name;
+    int BaseWidth;
+    int BaseLength;
+    List<Floor> Floors;
+}
 
-Sprint:
-- StartDate
-- EndDate
-- WorkDayCount
-- DeveloperCapacities (`List<DeveloperCapacity>`)
+class Floor
+{
+    int Id;
+    int Width;
+    int Length;
+    List<BuildingObject> BuildingObjects;
+    List<Furniture> Furnitures;
+}
 
-DeveloperCapacity:
-- EmployeeId
-- CapacityHour (per week)
+class Furniture
+{
+    int Id;
+    int X; // Top-left position's X coordinate
+    int Y; // Top-left position's Y coordinate
+    int Width;
+    int Length;
+    string ImgPath;
+    Material Material;
+}
 
-WorkItem:
-- Title
-- Description
-- Files?
-- EmployeeId
-- State: New/Active/Resolved/Closed
-- OriginalEstimatedHours
-- HoursLogged
-- BranchName
-- PullRequestLink
-- ParentItem
+// Wall, window, door
+class BuildingObject
+{
+    int Id;
+    int X; // Top-left position's X coordinate
+    int Y; // Top-left position's Y coordinate
+    int Width;
+    int Length;
+    int Height;
+    Direction? Direction;
+}
 
-### Mock-ups
-
-Project Overview Page
-
-![Project Overview Page](./mockups/projects.png)
-
-Backlog Page
-
-![https://www.kevinrchant.com/2020/12/03/viewing-agile-and-scrum-work-items-at-the-same-time-in-azure-devops/](./mockups/backlog.png)
-
-Sprint Task Board:
-
-![Sprint Task Board](./mockups/task_board.jpg)
+```
