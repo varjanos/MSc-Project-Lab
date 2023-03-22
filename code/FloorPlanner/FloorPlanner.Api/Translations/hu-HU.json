@@ -1,0 +1,154 @@
+{
+  "Menu": {
+    "Translations": "Fordítások",
+    "AuditEventLogs": "Eseménynapló",
+    "Home": "Főoldal",
+    "Products": "Termékek",
+    "DarkTheme": "Sötét téma",
+    "Language": "Nyelv"
+  },
+  "Errors": {
+    "InternalServerError": {
+      "TranslationText": "Belső szerverhiba",
+      "TranslationDescription": "Belső szerverhiba leírása"
+    },
+    "TranslationInvalidParametersCount": {
+      "TranslationText": "Hiányzó fordítási paraméter(ek).",
+      "TranslationDescription": "Hiányzó fordítási paraméter(ek) leírása."
+    }
+  },
+  "Language": {
+    "en": "Angol",
+    "hu": "Magyar"
+  },
+  "AuditEventLogs": {
+    "Timestamp": {
+      "TranslationText": "Időbélyeg",
+      "TranslationDescription": "Audit Event Logs table Timestamp column name"
+    },
+    "Table": {
+      "TranslationText": "Tábla",
+      "TranslationDescription": "Audit Event Logs table Table column name"
+    },
+    "Action": {
+      "TranslationText": "Művelet",
+      "TranslationDescription": "Audit Event Logs table Action column name"
+    },
+    "LastUpdatedBy": {
+      "TranslationText": "Utoljára módosította",
+      "TranslationDescription": "Audit Event Logs table LastUpdatedBy column name"
+    },
+    "EntityPrimaryKey": {
+      "TranslationText": "Entitás elsődleges kulcs",
+      "TranslationDescription": "Audit Event Logs table EntityPrimaryKey column name"
+    },
+    "PrimaryKeyJson": {
+      "TranslationText": "Elsődleges kulcs JSON",
+      "TranslationDescription": "Audit Event Logs table PrimaryKeyJson column name"
+    },
+    "ChangesJson": {
+      "TranslationText": "Változások JSON",
+      "TranslationDescription": "Audit Event Logs table ChangesJson column name"
+    },
+    "ColumnValuesJson": {
+      "TranslationText": "Oszlop értékek JSON",
+      "TranslationDescription": "Audit Event Logs table ColumnValuesJson column name"
+    }
+  },
+  "Translations": {
+    "Language": {
+      "TranslationText": "Nyelv",
+      "TranslationDescription": "Audit Event Logs table Language column name"
+    },
+    "Key": {
+      "TranslationText": "Kulcs",
+      "TranslationDescription": "Audit Event Logs table Key column name"
+    },
+    "Text": {
+      "TranslationText": "Szöveg",
+      "TranslationDescription": "Audit Event Logs table Text column name"
+    },
+    "Description": {
+      "TranslationText": "Leírás",
+      "TranslationDescription": "Audit Event Logs table Description column name"
+    },
+    "ParametersCount": {
+      "TranslationText": "Paraméterek",
+      "TranslationDescription": "Audit Event Logs table ParametersCount column name"
+    }
+  },
+  "Button": {
+    "Clear": {
+      "TranslationText": "Törlés",
+      "TranslationDescription": "Clear button text"
+    },
+    "Cancel": {
+      "TranslationText": "Mégse",
+      "TranslationDescription": "Cancel button text"
+    },
+    "Ok": {
+      "TranslationText": "Ok",
+      "TranslationDescription": "Ok button text"
+    },
+    "Save": {
+      "TranslationText": "Mentés",
+      "TranslationDescription": "Save button text"
+    },
+    "Edit": {
+      "TranslationText": "Szerkesztés",
+      "TranslationDescription": "Edit button text"
+    }
+  },
+  "Pagination": {
+    "RowsPerPage": {
+      "TranslationText": "Oldalankénti elemek:",
+      "TranslationDescription": "Rows per page text for pagination"
+    },
+    "InfoFormat": {
+      "TranslationText": "{first_item}-{last_item}, összesen {all_items}",
+      "TranslationDescription": "Info format text for pagination"
+    }
+  },
+  "Grid": {
+    "Cancel": "Mégse",
+    "CollapseRow": "Összecsukás",
+    "Create": "Létrehozás",
+    "Edit": "Szerkesztés",
+    "ExpandRow": "Kinyitás",
+    "FilterEndDate": "Befejező dátum",
+    "FilterStartDate": "Kezdő dátum",
+    "NoResults": "Nincs találat",
+    "Reset": "Visszaállítás",
+    "ResetConfirmationMessage": "Biztosan szeretné alaphelyzetbe állítani a táblázat beállításait?",
+    "ResetCustomization": "Alaphelyzetbe állítás",
+    "Save": "Mentés",
+    "UpdateDefaultConfirmationMessage": "Biztosan el szeretné menteni a jelenlegi beállításokat alapértelmezettként?",
+    "UpdateDefaultCustomization": "Mentés alapértelmezettként"
+  },
+  "Paginator": {
+    "FirstPage": "Első oldal",
+    "Items": "{startIndex} - {endIndex} összesen {length}",
+    "ItemsPerPage": "Oldalankénti elemek:",
+    "LastPage": "Utolsó oldal",
+    "NextPage": "Következő oldal",
+    "NoItems": "{length} - {length}",
+    "PreviousPage": "Előző oldal"
+  },
+  "ProductsGrid": {
+    "id": "Id",
+    "name": "Név",
+    "quantity": "Mennyiség",
+    "price": "Ár"
+  },
+  "TranslationsGrid": {
+    "language": "Nyelv",
+    "key": "Kulcs",
+    "text": "Szöveg",
+    "description": "Leírás",
+    "parametersCount": "Paraméterek száma"
+  },
+  "Notification": {
+    "Dismiss": "Elrejt"
+  }
+}
+

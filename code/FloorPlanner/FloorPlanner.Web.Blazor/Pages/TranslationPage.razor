@@ -1,0 +1,153 @@
+﻿@page "/translation-page"
+@using FloorPlanner.Web.Blazor.Client
+@inherits BaseComponent
+@inject ITranslationClient TranslationClient
+
+<PageTitle>@TranslationService["Menu.Translations"]</PageTitle>
+
+<MudTable @ref="Table" ServerData="@(new Func<TableState, Task<TableData<TranslationDto>>>(ServerReload))"
+    AllowUnsorted="false" Dense Striped Hover
+    CanCancelEdit CancelEditTooltip="@TranslationService["Button.Cancel"]" CommitEditTooltip="@TranslationService["Button.Save"]"
+    RowEditPreview="BackupItem" RowEditCancel="EditCancelled" RowEditCommit="EditCommittedAsync">
+    <HeaderContent>
+        <MudTh>
+            <MudTableSortLabel T="TranslationDto" SortLabel="@nameof(TranslationDto.Language)" InitialDirection="SortDirection.Ascending">@TranslationService["Translations.Language"]</MudTableSortLabel>
+            <MudSelect T="string" Margin="Margin.Dense" Variant="Variant.Outlined" SelectedValuesChanged="SearchLanguagesChanged"
+                MultiSelection MultiSelectionTextFunc="@(new Func<List<string>, string>(GetLanguagesMultiSelectionText))" Clearable>
+                @foreach (var language in TranslationService.GetSupportedLanguages())
+                {
+                        <MudSelectItem Value="@language.Name">@TranslationService[$"Language.{language.Name}"]</MudSelectItem>
+                }
+            </MudSelect>
+        </MudTh>
+        <MudTh>
+            <MudTableSortLabel T="TranslationDto" SortLabel="@nameof(TranslationDto.Key)">@TranslationService["Translations.Key"]</MudTableSortLabel>
+            <MudTextField @bind-Value="@searchKey" Margin="Margin.Dense" Variant="Variant.Outlined" TextChanged="SearchTextChanged" Clearable />
+        </MudTh>
+        <MudTh>
+            <MudTableSortLabel T="TranslationDto" SortLabel="@nameof(TranslationDto.Text)">@TranslationService["Translations.Text"]</MudTableSortLabel>
+            <MudTextField @bind-Value="@searchText" Margin="Margin.Dense" Variant="Variant.Outlined" TextChanged="SearchTextChanged" Clearable />
+        </MudTh>
+        <MudTh>
+            <MudTableSortLabel T="TranslationDto" SortLabel="@nameof(TranslationDto.Description)">@TranslationService["Translations.Description"]</MudTableSortLabel>
+            <MudTextField @bind-Value="@searchDescription" Margin="Margin.Dense" Variant="Variant.Outlined" TextChanged="SearchTextChanged" Clearable />
+        </MudTh>
+        <MudTh>
+            <MudTableSortLabel T="TranslationDto" SortLabel="@nameof(TranslationDto.ParametersCount)">@TranslationService["Translations.ParametersCount"]</MudTableSortLabel>
+            <MudNumericField T="int?" ValueChanged="SearchParametersCountChanged" Margin="Margin.Dense" Variant="Variant.Outlined" Min="0" Clearable />
+        </MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd>@TranslationService[$"Language.{context.Language}"]</MudTd>
+        <MudTd>@context.Key</MudTd>
+        <MudTd>@context.Text</MudTd>
+        <MudTd>@context.Description</MudTd>
+        <MudTd>@context.ParametersCount</MudTd>
+    </RowTemplate>
+    <RowEditingTemplate>
+        <MudTd>@context.Language</MudTd>
+        <MudTd>@context.Key</MudTd>
+        <MudTd>
+            <MudTextField @bind-Value="@context.Text" />
+        </MudTd>
+        <MudTd>
+            <MudTextField @bind-Value="@context.Description" />
+        </MudTd>
+        <MudTd>@context.ParametersCount</MudTd>
+    </RowEditingTemplate>
+    <PagerContent>
+        <MudTablePager RowsPerPageString="@TranslationService["Pagination.RowsPerPage"]" InfoFormat="@TranslationService["Pagination.InfoFormat"]" />
+    </PagerContent>
+</MudTable>
+
+
+@code {
+    private MudTable<TranslationDto> Table { get; set; }
+
+    private IEnumerable<string> searchLanguages;
+    private string searchKey;
+    private string searchText;
+    private string searchDescription;
+    private int? searchParametersCount;
+
+    private TranslationDto translationBeforeEdit;
+
+    private async Task<TableData<TranslationDto>> ServerReload(TableState state)
+    {
+        var result = await TranslationClient.GetTranslationsAsync(
+            searchLanguages,
+            searchKey,
+            searchText,
+            searchDescription,
+            searchParametersCount,
+            state.Page,
+            state.PageSize,
+            state.SortLabel,
+            state.SortDirection == SortDirection.Descending ? SortOrder.Descending : SortOrder.Ascending,
+            CancellationToken);
+
+        return new TableData<TranslationDto>
+            {
+                Items = result.Items,
+                TotalItems = result.TotalItems,
+            };
+    }
+
+    private void SearchLanguagesChanged(IEnumerable<string> languages)
+    {
+        searchLanguages = languages;
+        Table.ReloadServerData();
+    }
+
+    private void SearchParametersCountChanged(int? parametersCount)
+    {
+        searchParametersCount = parametersCount;
+        Table.ReloadServerData();
+    }
+
+    private void SearchTextChanged()
+    {
+        Table.ReloadServerData();
+    }
+
+    private string GetLanguagesMultiSelectionText(List<string> languages)
+    {
+        var supportedLanguages = TranslationService.GetSupportedLanguages();
+
+        return string.Join(", ", 
+        languages.Select(language => 
+            TranslationService[$"Language.{supportedLanguages.First(x=>x.Name == language)}"]
+        ));
+    }
+
+    private void BackupItem(object translation)
+    {
+        translationBeforeEdit = new()
+            {
+                Text = ((TranslationDto)translation).Text,
+                Description = ((TranslationDto)translation).Description,
+            };
+    }
+
+    private void EditCancelled(object translation)
+    {
+        ((TranslationDto)translation).Text = translationBeforeEdit.Text;
+        ((TranslationDto)translation).Description = translationBeforeEdit.Description;
+    }
+
+    private async void EditCommittedAsync(object translation)
+    {
+        var dto = (TranslationDto)translation;
+        await TranslationClient.UpdateTranslationAsync(new()
+            {
+                Language = dto.Language,
+                Key = dto.Key,
+                Text = dto.Text,
+                Description = dto.Description,
+            },
+        CancellationToken);
+
+        TranslationService.TranslationUpdated(dto);
+    }
+}
+

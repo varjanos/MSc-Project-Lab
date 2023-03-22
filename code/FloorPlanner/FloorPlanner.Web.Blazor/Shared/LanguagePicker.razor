@@ -1,0 +1,37 @@
+﻿@using Client
+@inherits BaseComponent
+
+<div>
+    <MudSelect T="string" Margin="Margin.Dense" Variant="Variant.Outlined" @bind-Value="SelectedLanguage">
+        @foreach (var language in _languages)
+        {
+            <MudSelectItem Value="@language.Name">
+                <img src="@($"{language.IconFilePath}")" alt="@language.DisplayName" height="20" class="mr-1 mb-n1" />
+                @TranslationService[$"Language.{language.Name}"]
+            </MudSelectItem>
+        }
+    </MudSelect>
+</div>
+
+
+@code {
+    private IList<LanguageDto> _languages;
+
+    private string _selectedLanguage;
+
+    private string SelectedLanguage
+    {
+        get => _selectedLanguage;
+        set
+        {
+            _selectedLanguage = value;
+            TranslationService.LanguageChanged(_selectedLanguage, CancellationToken);
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        _languages = TranslationService.GetSupportedLanguages();
+        SelectedLanguage = TranslationService.GetCurrentLanguage();
+    }
+}

@@ -1,0 +1,21 @@
+﻿@using System.Diagnostics.CodeAnalysis
+@inherits BaseComponent
+
+<MudDateRangePicker @ref="TimestampDateRangePicker" DateRange="SearchTimestamp" DateRangeChanged="SearchTimestampChanged"
+                    Style="width: 308px;" Margin="Margin.Dense" Variant="Variant.Outlined" Editable>
+    <PickerActions>
+        <MudButton OnClick="@(() => TimestampDateRangePicker?.Clear())" Class="mr-auto">@TranslationService["Button.Clear"]</MudButton>
+        <MudButton OnClick="@(() => TimestampDateRangePicker?.Close(false))">@TranslationService["Button.Cancel"]</MudButton>
+        <MudButton OnClick="@(() => TimestampDateRangePicker?.Close())" Color="Color.Primary">@TranslationService["Button.Ok"]</MudButton>
+    </PickerActions>
+</MudDateRangePicker>
+
+@code {
+    private MudDateRangePicker? TimestampDateRangePicker { get; set; }
+
+    [Parameter, AllowNull]
+    public DateRange SearchTimestamp { get; set; } = new DateRange(DateTime.Now.AddDays(-6).Date, DateTime.Now.Date);
+
+    [Parameter, DisallowNull]
+    public EventCallback<DateRange> SearchTimestampChanged { get; set; }
+}

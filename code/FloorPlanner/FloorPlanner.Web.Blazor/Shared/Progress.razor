@@ -1,0 +1,30 @@
+﻿@using FloorPlanner.Web.Blazor.Services.Progress
+@inject IProgressClientService ProgressService
+
+@if (IsVisible)
+{
+    <MudProgressLinear Color="Color.Secondary" Indeterminate />
+}
+
+@code
+{
+    private bool IsVisible { get; set; }
+
+    protected override void OnInitialized()
+    {
+        ProgressService.OnShow += ShowProgress;
+        ProgressService.OnHide += HideProgress;
+    }
+
+    private void ShowProgress()
+    {
+        IsVisible = true;
+        StateHasChanged();
+    }
+
+    private void HideProgress()
+    {
+        IsVisible = false;
+        StateHasChanged();
+    }
+}

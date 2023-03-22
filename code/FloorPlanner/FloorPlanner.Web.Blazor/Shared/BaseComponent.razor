@@ -1,0 +1,44 @@
+﻿@using FloorPlanner.Web.Blazor.Models
+@using FloorPlanner.Web.Blazor.Services.DisplayError
+@using FloorPlanner.Web.Blazor.Services.Translations
+@using MudBlazor
+@inherits LayoutComponentBase;
+@inject IDisplayErrorClientService DisplayErrorService
+@inject ISnackbar Snackbar
+@implements IDisposable
+
+@code
+{
+    [Inject]
+    protected ITranslationClientService TranslationService { get; set; }
+
+    private CancellationTokenSource CancellationTokenSource = new CancellationTokenSource();
+
+    protected CancellationToken CancellationToken { get { return CancellationTokenSource.Token; } }
+
+    protected override Task OnInitializedAsync()
+    {
+        TranslationService.OnTranslationLoad += (_, _) => StateHasChanged();
+        DisplayErrorService.OnDisplayError += DisplayError;
+        return base.OnInitializedAsync();
+    }
+
+    protected override void OnInitialized()
+    {
+        TranslationService.OnTranslationLoad += (_, _) => StateHasChanged();
+        DisplayErrorService.OnDisplayError += DisplayError;
+        base.OnInitialized();
+    }
+
+    public void Dispose()
+    {
+        CancellationTokenSource.Cancel();
+        CancellationTokenSource.Dispose();
+    }
+
+
+    private void DisplayError(ErrorDetails errorDetails)
+    {
+        Snackbar.Add($"{TranslationService[errorDetails.TranslationKey]}: ({errorDetails.Message} - {errorDetails.ServerTime})", Severity.Error);
+    }
+ }

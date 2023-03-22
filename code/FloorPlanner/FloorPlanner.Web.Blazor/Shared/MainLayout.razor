@@ -1,0 +1,52 @@
+﻿@using FloorPlanner.Web.Blazor.Interfaces
+@using FloorPlanner.Web.Blazor.Shared
+@using MudBlazor.Utilities
+@inherits BaseComponent
+
+<MudThemeProvider Theme="Theme" />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<LoadingScreen>
+    <MudLayout>
+        <MudAppBar Color="Color.Primary" Elevation="0">
+            <MudIconButton Class="mr-3" Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+            <AppBar />
+        </MudAppBar>
+        <MudDrawer @bind-Open="drawerOpen">
+            <MudDrawerHeader Class="justify-center">
+                <MudText Color="Color.Primary" Typo="Typo.h5">ProjectLogo</MudText>
+            </MudDrawerHeader>
+            <NavMenu />
+        </MudDrawer>
+
+        <MudMainContent>
+            <div class="absolute" style="width: 100%;">
+                <Progress />
+            </div>
+            <MudContainer MaxWidth="MaxWidth.ExtraExtraLarge" Class="my-6">
+                @Body
+            </MudContainer>
+        </MudMainContent>
+    </MudLayout>
+</LoadingScreen>
+
+
+@code {
+    private MudTheme Theme = new()
+    {
+        Palette = new()
+        {
+            Primary = new MudColor("#AE1B26"),
+            Secondary = new MudColor("#D1646C"),
+            Background = new MudColor("#E5E5E5"),
+        },
+    };
+
+    private bool drawerOpen = true;
+
+    private void DrawerToggle()
+    {
+        drawerOpen = !drawerOpen;
+    }
+}
