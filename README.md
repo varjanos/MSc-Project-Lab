@@ -4,8 +4,6 @@
 
 ### Specification
 
-----
-
 My main goal is to create a FloorPlanner application, where the authenticated users can create their own floorplans and manage them.
 
 The application uses .NET's Identity server for authentication, the users must register first, then they can log in.
@@ -24,15 +22,15 @@ The app uses WebGL to display the plans on the screen. The user can drag and dro
     - Creating custom furniture
     - Multiuser view
 
-### Wireframes
-
 ----
+
+### Wireframes
 
 Wireframes can be found on this [Figma page](https://www.figma.com/file/T7iCeyFWDbHn5t4UU6zhn2/FloorPlanner?t=xHwSmCKcp177H2HJ-1).
 
-### Weekly schedule
-
 ----
+
+### Weekly schedule
 
 >4. Project specification, DB Scheme, Wireframes, Weekly schedule, Git init
 
@@ -56,9 +54,9 @@ Wireframes can be found on this [Figma page](https://www.figma.com/file/T7iCeyFW
 
 >14. Documentation
 
-### DB Scheme
-
 ----
+
+### DB Scheme
 
 ```cs
 class UserProfile
