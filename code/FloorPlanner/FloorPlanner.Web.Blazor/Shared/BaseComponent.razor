@@ -1,6 +1,5 @@
 ﻿@using FloorPlanner.Web.Blazor.Models
 @using FloorPlanner.Web.Blazor.Services.DisplayError
-@using FloorPlanner.Web.Blazor.Services.Translations
 @using MudBlazor
 @inherits LayoutComponentBase;
 @inject IDisplayErrorClientService DisplayErrorService
@@ -9,23 +8,18 @@
 
 @code
 {
-    [Inject]
-    protected ITranslationClientService TranslationService { get; set; }
-
     private CancellationTokenSource CancellationTokenSource = new CancellationTokenSource();
 
     protected CancellationToken CancellationToken { get { return CancellationTokenSource.Token; } }
 
     protected override Task OnInitializedAsync()
     {
-        TranslationService.OnTranslationLoad += (_, _) => StateHasChanged();
         DisplayErrorService.OnDisplayError += DisplayError;
         return base.OnInitializedAsync();
     }
 
     protected override void OnInitialized()
     {
-        TranslationService.OnTranslationLoad += (_, _) => StateHasChanged();
         DisplayErrorService.OnDisplayError += DisplayError;
         base.OnInitialized();
     }
@@ -36,9 +30,8 @@
         CancellationTokenSource.Dispose();
     }
 
-
     private void DisplayError(ErrorDetails errorDetails)
     {
-        Snackbar.Add($"{TranslationService[errorDetails.TranslationKey]}: ({errorDetails.Message} - {errorDetails.ServerTime})", Severity.Error);
+        Snackbar.Add($"{errorDetails.Message} - {errorDetails.ServerTime}", Severity.Error);
     }
  }

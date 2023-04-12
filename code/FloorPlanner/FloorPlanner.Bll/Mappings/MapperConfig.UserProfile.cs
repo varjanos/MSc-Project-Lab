@@ -9,7 +9,7 @@ public static partial class MapperConfig
     private static IMapperConfigurationExpression ConfigureUserProfile(this IMapperConfigurationExpression cfg)
     {
         cfg.CreateMap<UserProfileEntity, UserProfileDto>()
-            .ForMember(dest => dest.Language, opt => opt.MapFrom(src => src.Language.Name));
+            .ForMember(dest => dest.Language, opt => opt.MapFrom(src => src.LanguageName));
         return cfg;
     }
 }

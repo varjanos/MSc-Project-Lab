@@ -1,4 +1,3 @@
-using Core.Translation;
 using FloorPlanner.Dal.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
@@ -10,8 +9,6 @@ public static class WireUp
 {
     public static void AddDal(this IServiceCollection services, string connectionString)
     {
-        services.RegisterTranslation(connectionString);
-
         services.AddDbContext<FloorPlannerDbContext>(options =>
             options.UseSqlServer(
                 connectionString,

@@ -4,9 +4,9 @@
 <MudDateRangePicker @ref="TimestampDateRangePicker" DateRange="SearchTimestamp" DateRangeChanged="SearchTimestampChanged"
                     Style="width: 308px;" Margin="Margin.Dense" Variant="Variant.Outlined" Editable>
     <PickerActions>
-        <MudButton OnClick="@(() => TimestampDateRangePicker?.Clear())" Class="mr-auto">@TranslationService["Button.Clear"]</MudButton>
-        <MudButton OnClick="@(() => TimestampDateRangePicker?.Close(false))">@TranslationService["Button.Cancel"]</MudButton>
-        <MudButton OnClick="@(() => TimestampDateRangePicker?.Close())" Color="Color.Primary">@TranslationService["Button.Ok"]</MudButton>
+        <MudButton OnClick="@(() => TimestampDateRangePicker?.Clear())" Class="mr-auto">Clear</MudButton>
+        <MudButton OnClick="@(() => TimestampDateRangePicker?.Close(false))">Cancel</MudButton>
+        <MudButton OnClick="@(() => TimestampDateRangePicker?.Close())" Color="Color.Primary">Ok</MudButton>
     </PickerActions>
 </MudDateRangePicker>
 

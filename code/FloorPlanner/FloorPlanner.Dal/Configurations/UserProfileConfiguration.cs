@@ -8,6 +8,10 @@ public class UserProfileConfiguration : IEntityTypeConfiguration<UserProfile>
 {
     public void Configure(EntityTypeBuilder<UserProfile> builder)
     {
+        builder.ToTable(nameof(UserProfile));
+
+        builder.HasKey(u => u.Id).HasName($"PK_{nameof(UserProfile)}");
+
         builder.HasIndex(u => new { u.Domain, u.UserName }).IsUnique();
 
         builder.Property(u => u.Domain).HasMaxLength(UserProfile.DomainMaxLength);

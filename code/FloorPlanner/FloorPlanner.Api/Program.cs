@@ -1,4 +1,3 @@
-using Core.Translation.Service;
 using Serilog;
 
 namespace FloorPlanner.Api;
@@ -8,19 +7,6 @@ public static class Program
     public static void Main(string[] args)
     {
         ConfigurationSetup();
-
-        if (args.Length > 0)
-        {
-            if (args[0].Equals("/SeedTranslations", StringComparison.OrdinalIgnoreCase))
-            {
-                var forceUpdate = args.Any(a => a.ToLower().Contains("--force"));
-                var host = CreateHostBuilder(args).Build();
-                using var scope = host.Services.CreateScope();
-                var localizationService = scope.ServiceProvider.GetRequiredService<ITranslationService>();
-                localizationService.SeedTranslationsAsync(true, forceUpdate).GetAwaiter().GetResult();
-                return;
-            }
-        }
 
         try
         {

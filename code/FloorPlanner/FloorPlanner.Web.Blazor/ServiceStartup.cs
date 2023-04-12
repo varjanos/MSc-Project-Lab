@@ -13,7 +13,6 @@ public static class ServiceStartup
         services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
         .CreateClient(HttpClientNames.ApiHttpClientName));
 
-        services.AddHttpClient<ITranslationClient, TranslationClient>(HttpClientNames.ApiHttpClientName);
         services.AddHttpClient<IUserProfileClient, UserProfileClient>(HttpClientNames.ApiHttpClientName);
     }
 

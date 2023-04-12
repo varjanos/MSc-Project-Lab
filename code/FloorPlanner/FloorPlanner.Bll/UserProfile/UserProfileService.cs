@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Core.Extensions;
-using Core.Translation.Dal.Entities;
+//using Core.Translation.Dal.Entities;
 using FloorPlanner.Bll.Extensions;
 using FloorPlanner.Dal.Context;
 using FloorPlanner.Transfer.UserProfile;
@@ -53,15 +52,15 @@ public class UserProfileService : IUserProfileService
                  {
                      await semaphore.WaitAsync();
 
-                     var userProfile = await _dbContext.UserProfile
+                     var userProfile = await _dbContext.UserProfiles
                        .Where(upr => upr.Domain == domainName && upr.UserName == userName)
                        .ProjectTo<UserProfileDto>(_mapper.ConfigurationProvider)
                        .SingleOrDefaultAsync();
 
                      if (userProfile == null)
                      {
-                         var language = await _dbContext.Language.FirstOrDefaultAsync();
-                         var entity = await CreateUserProfileEntityAsync(fullADUserName, language);
+                         //var language = await _dbContext.Language.FirstOrDefaultAsync();
+                         var entity = await CreateUserProfileEntityAsync(fullADUserName);
                          userProfile = _mapper.Map<UserProfileDto>(entity);
                      }
 
@@ -84,13 +83,13 @@ public class UserProfileService : IUserProfileService
              });
     }
 
-    public async Task<UserProfileDto> GetUserProfileAsync(int userProfileId) => await _dbContext.UserProfile
+    public async Task<UserProfileDto> GetUserProfileAsync(int userProfileId) => await _dbContext.UserProfiles
             .ProjectTo<UserProfileDto>(_mapper.ConfigurationProvider)
             .SingleAsync(u => u.Id == userProfileId);
 
     public async Task SetLanguageForUserProfileAsync(int userProfileId, string language)
     {
-        var userProfile = await _dbContext.UserProfile
+        var userProfile = await _dbContext.UserProfiles
             .SingleAsync(u => u.Id == userProfileId);
 
         if (userProfile.LanguageName == language)
@@ -101,7 +100,7 @@ public class UserProfileService : IUserProfileService
         userProfile.LanguageName = language;
         await _dbContext.SaveChangesAsync();
 
-        _logger.LogUpdateItem(nameof(SetLanguageForUserProfileAsync), userProfile.Id);
+        _logger.LogTrace("Language set for : {UserProfileId}.", userProfile.Id);
 
         InvalidateCache(userProfile);
     }
@@ -130,11 +129,11 @@ public class UserProfileService : IUserProfileService
     /// </summary>
     /// <param name="fullADUserName">User's full AD username, Format: 'domain\username'.</param>
     /// <returns>The created UserProfile entity</returns>
-    private async Task<UserProfileEntity> CreateUserProfileEntityAsync(string fullADUserName, Language language)
+    private async Task<UserProfileEntity> CreateUserProfileEntityAsync(string fullADUserName)
     {
         (var domainName, var userName) = GetDomainAndUserNameFromADUserName(fullADUserName);
 
-        var userProfile = await _dbContext.UserProfile
+        var userProfile = await _dbContext.UserProfiles
             .Where(upr => upr.Domain == domainName && upr.UserName == userName)
             .SingleOrDefaultAsync();
 
@@ -147,13 +146,12 @@ public class UserProfileService : IUserProfileService
         {
             Domain = domainName,
             UserName = userName,
-            Language = language,
         };
 
-        _dbContext.UserProfile.Add(userProfile);
+        _dbContext.UserProfiles.Add(userProfile);
         await _dbContext.SaveChangesAsync();
 
-        _logger.LogCreateItem(nameof(CreateUserProfileEntityAsync), userProfile.Id);
+        _logger.LogTrace("UserProfileEntity created with Id: {UserProfileId}.", userProfile.Id);
 
         return userProfile;
     }

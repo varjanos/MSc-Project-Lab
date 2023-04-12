@@ -1,5 +1,4 @@
-﻿using Core.Time;
-using FloorPlanner.Common.Exceptions;
+﻿using FloorPlanner.Common.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -13,10 +12,10 @@ public class ErrorHandlerMiddleware
 
     public ErrorHandlerMiddleware(RequestDelegate next) => _next = next;
 
-    public async Task InvokeAsync(HttpContext context, ITimeService timeService)
-        => await CreateResponseAsync(context, timeService);
+    public async Task InvokeAsync(HttpContext context)
+        => await CreateResponseAsync(context);
 
-    private static async Task CreateResponseAsync(HttpContext context, ITimeService timeService)
+    private static async Task CreateResponseAsync(HttpContext context)
     {
         var exception = context.Features.Get<IExceptionHandlerFeature>()?.Error;
 
@@ -32,16 +31,14 @@ public class ErrorHandlerMiddleware
                 case BaseException baseException:
                     problem.Status = (int)HttpStatusCode.InternalServerError;
                     problem.Extensions["message"] = baseException.Message;
-                    problem.Extensions["TranslationKey"] = baseException.TranslationKey;
                     break;
                 default:
                     problem.Status = (int)HttpStatusCode.InternalServerError;
                     problem.Extensions["message"] = problem.Title;
-                    problem.Extensions["TranslationKey"] = TranslationErrorKeys.InternalServerErrorKey;
                     break;
             }
 
-            problem.Extensions["serverTime"] = timeService.Now;
+            problem.Extensions["serverTime"] = DateTime.Now;
             context.Response.StatusCode = problem.Status.Value;
             context.Response.ContentType = "application/problem+json";
             var stream = context.Response.Body;

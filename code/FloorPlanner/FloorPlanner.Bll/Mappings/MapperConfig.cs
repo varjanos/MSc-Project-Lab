@@ -1,5 +1,4 @@
 using AutoMapper;
-using Core.Translation.Mappings;
 
 namespace FloorPlanner.Bll.Mappings;
 
@@ -9,7 +8,6 @@ public static partial class MapperConfig
     {
         var config = new MapperConfiguration(cfg =>
         {
-            cfg.ConfigureTranslation();
             cfg.ConfigureUserProfile();
         });
 
