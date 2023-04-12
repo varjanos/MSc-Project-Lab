@@ -2,9 +2,8 @@
 
 public class ErrorDetails
 {
-    public string Title { get; set; }
-    public string Message { get; set; }
+    public string Title { get; set; } = null!;
+    public string Message { get; set; } = null!;
     public int Status { get; set; }
     public DateTime ServerTime { get; set; }
-    public string TranslationKey { get; set; }
 }

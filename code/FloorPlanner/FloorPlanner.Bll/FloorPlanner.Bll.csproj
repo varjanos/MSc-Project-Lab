@@ -9,7 +9,6 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.0" />
     <PackageReference Include="AutSoft.Core.Pagination" Version="1.0.1" />
-    <PackageReference Include="AutSoft.Core.Time" Version="1.0.11" />
   </ItemGroup>
 
   <ItemGroup>

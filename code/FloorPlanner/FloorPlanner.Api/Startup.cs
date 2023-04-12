@@ -1,5 +1,4 @@
-﻿using Core.ApiExtensions;
-using Core.Context.CurrentUserIdContext;
+﻿
 using Core.Context.RequestContext;
 using FloorPlanner.Api.Context;
 using FloorPlanner.Api.Extensions;
@@ -7,6 +6,7 @@ using FloorPlanner.Api.Middlewares;
 using FloorPlanner.Bll;
 using FloorPlanner.Bll.Mappings;
 using FloorPlanner.Dal;
+using Microsoft.Extensions.Primitives;
 using System.Text.Json.Serialization;
 
 namespace FloorPlanner.Api;
@@ -64,21 +64,19 @@ public class Startup
             app.UseHsts();
         }
 
-        var customStyles = new string[]
+        app.Use(async (context, next) =>
         {
-            "https://fonts.googleapis.com",
-            "https://unicons.iconscout.com/release/v4.0.0/css/line.css",
-        };
+            context.Response.Headers.Add("X-Content-Type-Options", new StringValues("nosniff"));
+            context.Response.Headers.Add("X-Frame-Options", new StringValues("SAMEORIGIN"));
+            context.Response.Headers.Add("X-XSS-Protection", new StringValues("1; mode=block"));
+            context.Response.Headers.Add("Cache-Control", new StringValues("no-store, no-cache"));
+            context.Response.Headers.Add("Pragma", new StringValues("no-cache"));
 
-        var customFonts = new string[]
-        {
-            "https://fonts.gstatic.com",
-            "https://unicons.iconscout.com",
-        };
+            context.Response.Headers.Add("X-Developed-By", "Janos Varga");
 
-        app.UseCsp(customStyles, customFonts);
+            await next.Invoke();
+        });
 
-        app.AddResponseHeaders();
         app.UseHttpsRedirection();
 
         app.UseRouting();

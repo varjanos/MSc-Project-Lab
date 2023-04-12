@@ -37,7 +37,6 @@ public class ErrorHttpMessageHandler : DelegatingHandler
         {
             errorDetails = new ErrorDetails
             {
-                TranslationKey = "Errors.UnexpectedError",
                 Title = "Errors.UnexpectedError",
                 Message = "Errors.UnexpectedError",
                 ServerTime = DateTime.Now,

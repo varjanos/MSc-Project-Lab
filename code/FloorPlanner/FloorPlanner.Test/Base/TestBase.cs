@@ -1,5 +1,4 @@
-﻿using Core.Context.CurrentUserIdContext;
-using Core.Context.RequestContext;
+﻿using Core.Context.RequestContext;
 using FloorPlanner.Bll;
 using FloorPlanner.Bll.Mappings;
 using FloorPlanner.Dal;
@@ -30,7 +29,7 @@ public class TestBase
         _services.AddLogging();
 
         _services.AddScoped<IRequestContext, TestRequestContext>();
-        _services.AddScoped<ICurrentUserIdContext, TestCurrentUserIdContext>();
+        //_services.AddScoped<ICurrentUserIdContext, TestCurrentUserIdContext>();
         _services.AddSingleton(_ => MapperConfig.ConfigureAutoMapper());
         _services.AddMemoryCache();
 

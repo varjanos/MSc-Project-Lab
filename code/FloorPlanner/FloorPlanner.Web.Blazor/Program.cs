@@ -1,5 +1,4 @@
 using FloorPlanner.Web.Blazor;
-using FloorPlanner.Web.Blazor.Client;
 using FloorPlanner.Web.Blazor.Constants;
 using FloorPlanner.Web.Blazor.Handlers;
 using FloorPlanner.Web.Blazor.Interfaces;
@@ -8,6 +7,7 @@ using FloorPlanner.Web.Blazor.Services.Progress;
 using FloorPlanner.Web.Blazor.Services.UserProfile;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using MudBlazor;
 using MudBlazor.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
@@ -27,6 +27,7 @@ builder.Services.AddHttpClient(HttpClientNames.ApiHttpClientName, client => clie
 builder.Services.AddApiClientServices();
 builder.Services.AddClientServices();
 builder.Services.AddMudServices();
+builder.Services.AddMudMarkdownServices();
 
 builder.Services.AddAuthorizationCore();
 

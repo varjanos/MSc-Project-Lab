@@ -1,8 +1,13 @@
 ﻿@page "/"
 
-<MudText>FloorPlanner</MudText>
+@using FloorPlanner.Web.Blazor.Constants;
 
+<div class="m-auto" style="max-width: 1000px; margin: auto;">
+    <MudMarkdown Value="@ReadmeText.Specification" />
 
-@code {
+    <MudMarkdown Value="@ReadmeText.Wireframe" />
 
-}
+    <MudMarkdown Value="@ReadmeText.Schedule" />
+
+    <MudMarkdown Value="@ReadmeText.DBScheme" />
+</div>

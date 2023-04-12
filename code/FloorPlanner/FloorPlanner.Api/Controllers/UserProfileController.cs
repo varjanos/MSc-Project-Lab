@@ -26,15 +26,4 @@ public class UserProfileController : BaseController
 
         return await _userProfileService.GetUserProfileAsync(_currentUserContext.CurrentUserId.Value);
     }
-
-    [HttpPut]
-    public async Task SetUserLanguageAsync(string language)
-    {
-        if (!_currentUserContext.CurrentUserId.HasValue)
-        {
-            throw new InvalidOperationException();
-        }
-
-        await _userProfileService.SetLanguageForUserProfileAsync(_currentUserContext.CurrentUserId.Value, language);
-    }
 }
