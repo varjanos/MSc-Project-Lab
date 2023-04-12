@@ -1,0 +1,40 @@
+﻿@page "/"
+
+@inject IDialogService DialogService
+
+@using FloorPlanner.Web.Blazor.Components.Auth;
+@using FloorPlanner.Web.Blazor.Constants;
+@using FloorPlanner.Web.Blazor.Options;
+
+<div class="row mb-3">
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" OnClick=OpenLoginDialog>
+        Login
+    </MudButton>
+
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" OnClick=OpenRegisterDialog>
+        Register
+    </MudButton>
+</div>
+
+<div class="m-auto" style="max-width: 1000px; margin: auto;">
+    <MudMarkdown Value="@ReadmeText.Specification" />
+
+    <MudMarkdown Value="@ReadmeText.Wireframe" />
+
+    <MudMarkdown Value="@ReadmeText.Schedule" />
+
+    <MudMarkdown Value="@ReadmeText.DBScheme" />
+</div>
+
+@code {
+
+    private void OpenLoginDialog()
+    {
+        DialogService.Show<Login>("Login", MudDialogOptions.AuthDialogOptions);
+    }
+
+    private void OpenRegisterDialog()
+    {
+        DialogService.Show<Register>("Register", MudDialogOptions.AuthDialogOptions);
+    }
+}

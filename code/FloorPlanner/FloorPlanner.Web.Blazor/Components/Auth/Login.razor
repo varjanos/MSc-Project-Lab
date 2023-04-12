@@ -1,0 +1,44 @@
+﻿@using FloorPlanner.Web.Blazor.Client;
+@using FloorPlanner.Web.Blazor.Services.Authentication;
+
+@inject IAuthService authService
+@inject NavigationManager navigationManager
+
+<MudDialog>
+    <DialogContent>
+        <MudPaper Class="pa-4" Elevation="0">
+            <MudForm ReadOnly="false" Model="loginModel">
+                <div class="mb-3">
+                    <MudTextField T="string" @bind-Value="loginModel.UserName" Label="Username" Required="true" RequiredError="User name is required!" />
+                </div>
+                <div class="mb-3">
+                    <MudTextField T="string" @bind-Value="loginModel.Password" Label="Password"
+                                  InputType="InputType.Password" Required="true" RequiredError="Password is required!" />
+                </div>
+
+                <div class="row mt-3">
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" FullWidth="true" Class="ml-auto" OnClick=HandleLoginAsync>
+                        Login
+                    </MudButton>
+                </div>
+            </MudForm>
+        </MudPaper>
+    </DialogContent>
+</MudDialog>
+
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    private LoginModel loginModel = new();
+
+    private async Task HandleLoginAsync()
+    {
+        var result = await authService.LoginAsync(loginModel);
+
+        if (result.Success)
+        {
+            
+        }
+    }
+}

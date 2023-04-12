@@ -1,0 +1,18 @@
+﻿@using FloorPlanner.Web.Blazor.Services.UserProfile
+@inject IUserProfileClientService UserService
+
+<div/>
+
+<MudSpacer />
+
+<MudText Typo="Typo.subtitle1">@_username</MudText>
+
+@code 
+{
+    private string _username = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        _username = UserService.GetUserName();
+    }
+}

@@ -1,0 +1,30 @@
+﻿@using FloorPlanner.Web.Blazor.Interfaces
+@inject IServiceProvider ServiceProvider
+@inherits BaseComponent
+
+@if (initialized)
+{
+    @ChildContent
+}
+else
+{
+    <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
+}
+
+
+@code {
+    private bool initialized;
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        foreach (var service in ServiceProvider.GetServices<IInitialize>())
+        {
+            await service.InitializeAsync(CancellationToken);
+        }
+
+        initialized = true;
+    }
+}
