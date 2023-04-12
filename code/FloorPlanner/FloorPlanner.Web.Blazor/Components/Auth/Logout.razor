@@ -1,0 +1,14 @@
+﻿@page "/logout"
+
+@using FloorPlanner.Web.Blazor.Services.Authentication;
+
+@inject IAuthService authService
+@inject NavigationManager navigationManager
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await authService.LogoutAsync();
+        navigationManager.NavigateTo("/");
+    }
+}

@@ -1,10 +1,9 @@
-﻿namespace FloorPlanner.Web.Blazor.Services.Progress
+﻿namespace FloorPlanner.Web.Blazor.Services.Progress;
+
+public interface IProgressClientService
 {
-    public interface IProgressClientService
-    {
-        event Action OnShow;
-        event Action OnHide;
-        void Show();
-        void Hide();
-    }
+    event Action OnShow;
+    event Action OnHide;
+    void Show();
+    void Hide();
 }

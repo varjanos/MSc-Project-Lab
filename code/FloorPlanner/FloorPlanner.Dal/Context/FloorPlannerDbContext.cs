@@ -1,14 +1,14 @@
 ﻿using FloorPlanner.Dal.Configurations;
 using FloorPlanner.Dal.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace FloorPlanner.Dal.Context;
 
-public class FloorPlannerDbContext : DbContext
+public class FloorPlannerDbContext : IdentityDbContext<UserProfile>
 {
     public FloorPlannerDbContext(DbContextOptions<FloorPlannerDbContext> options) : base(options){}
 
-    public virtual DbSet<UserProfile> UserProfiles { get; set; }
     public virtual DbSet<Plan> Plans { get; set; }
     public virtual DbSet<Floor> Floors { get; set; }
     public virtual DbSet<Furniture> Furnitures { get; set; }

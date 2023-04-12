@@ -14,6 +14,7 @@ public static class ServiceStartup
         .CreateClient(HttpClientNames.ApiHttpClientName));
 
         services.AddHttpClient<IUserProfileClient, UserProfileClient>(HttpClientNames.ApiHttpClientName);
+        services.AddHttpClient<IAuthenticationClient, AuthenticationClient>(HttpClientNames.ApiHttpClientName);
     }
 
     public static void AddClientServices(this IServiceCollection services)

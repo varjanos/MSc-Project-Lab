@@ -1,12 +1,18 @@
-﻿
-using Core.Context.RequestContext;
+﻿using Core.Context.RequestContext;
 using FloorPlanner.Api.Context;
 using FloorPlanner.Api.Extensions;
 using FloorPlanner.Api.Middlewares;
 using FloorPlanner.Bll;
 using FloorPlanner.Bll.Mappings;
 using FloorPlanner.Dal;
+using FloorPlanner.Dal.Context;
+using FloorPlanner.Dal.Entities;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Primitives;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using System.Text.Json.Serialization;
 
 namespace FloorPlanner.Api;
@@ -40,7 +46,10 @@ public class Startup
 
         services.AddDal(_configuration.GetConnectionString("DefaultConnection")!);
 
-        services.AddWindowsAuthenticationAndAuthorization(_configuration); // Windows Authentication
+        services.AddIdentity<UserProfile, IdentityRole>()
+            .AddEntityFrameworkStores<FloorPlannerDbContext>();
+
+        services.AddJwtAuthentication(_configuration);
 
         services.AddScoped<ICurrentUserIdContext, CurrentUserContext>();
         services.AddScoped<ICurrentUserContext, CurrentUserContext>();

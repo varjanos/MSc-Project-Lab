@@ -13,12 +13,13 @@ public class AuthenticationMiddleware
 
     public async Task InvokeAsync(HttpContext context, IUserProfileService userProfileService)
     {
+        /*
         if (context.User.Identity is ClaimsIdentity user && user.IsAuthenticated &&
             !string.IsNullOrEmpty(user.Name) && !context.User.HasClaim(x => x.Type == CustomClaimTypes.UserId))
         {
             var userProfile = await userProfileService.GetOrCreateUserProfileAsync(user.Name);
             user.AddClaim(new Claim(CustomClaimTypes.UserId, userProfile.Id.ToString(CultureInfo.InvariantCulture)));
-        }
+        }*/
 
         await _next(context);
     }

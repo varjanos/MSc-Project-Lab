@@ -1,12 +1,13 @@
-﻿using FloorPlanner.Transfer.UserProfile;
+﻿using FloorPlanner.Transfer.Authentication;
+using FloorPlanner.Transfer.AuthenticationResponse;
+using FloorPlanner.Transfer.UserProfile;
 
 namespace FloorPlanner.Bll.UserProfile;
 
 public interface IUserProfileService
 {
-    Task<UserProfileDto> GetOrCreateUserProfileAsync(string fullADUserName);
+    Task<LoginResponse> LoginUserAsync(LoginModel loginModel);
+    Task<RegisterResponse> RegisterUserAsync(RegisterModel registerModel);
 
     Task<UserProfileDto> GetUserProfileAsync(int userProfileId);
-
-    Task SetLanguageForUserProfileAsync(int userProfileId, string language);
 }

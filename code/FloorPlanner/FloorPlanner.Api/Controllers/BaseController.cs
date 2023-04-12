@@ -5,8 +5,7 @@ namespace FloorPlanner.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]/[action]")]
-[Authorize(Policy = "UsagePolicy")]
-[AllowAnonymous]
+[Authorize]
 public abstract class BaseController : ControllerBase
 {
 

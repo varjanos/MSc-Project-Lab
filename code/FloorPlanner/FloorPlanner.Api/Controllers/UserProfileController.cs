@@ -19,11 +19,17 @@ public class UserProfileController : BaseController
     [HttpGet]
     public async Task<UserProfileDto> GetUserProfileDtoAsync()
     {
+        await Task.CompletedTask;
+
+        return new UserProfileDto { Id = 1, Language = "", UserName = "Teszt Jakab" };
+
+        /*
         if (!_currentUserContext.CurrentUserId.HasValue)
         {
             throw new InvalidOperationException();
         }
 
         return await _userProfileService.GetUserProfileAsync(_currentUserContext.CurrentUserId.Value);
+        */
     }
 }

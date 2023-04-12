@@ -1,25 +1,24 @@
-﻿namespace FloorPlanner.Web.Blazor.Services.Progress
+﻿namespace FloorPlanner.Web.Blazor.Services.Progress;
+
+public class ProgressClientService : IProgressClientService
 {
-    public class ProgressClientService : IProgressClientService
+    public event Action OnShow;
+    public event Action OnHide;
+
+    private int _Counter { get; set; } = 0;
+
+    public void Show()
     {
-        public event Action OnShow;
-        public event Action OnHide;
+        _Counter++;
+        OnShow?.Invoke();
+    }
 
-        private int _Counter { get; set; } = 0;
+    public void Hide()
+    {
+        if (_Counter > 0)
+            _Counter--;
 
-        public void Show()
-        {
-            _Counter++;
-            OnShow?.Invoke();
-        }
-
-        public void Hide()
-        {
-            if (_Counter > 0)
-                _Counter--;
-
-            if (_Counter == 0)
-                OnHide?.Invoke();
-        }
+        if (_Counter == 0)
+            OnHide?.Invoke();
     }
 }

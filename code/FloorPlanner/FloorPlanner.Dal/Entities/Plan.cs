@@ -8,7 +8,7 @@ public class Plan
     public int BaseLength { get; set; }
     public DateTimeOffset CreationDate { get; set; }
 
-    public int UserProfileId { get; set; }
+    public string UserProfileId { get; set; }
     public virtual UserProfile UserProfile { get; set; }
     public virtual ICollection<Floor> Floors { get; set; }
 }
