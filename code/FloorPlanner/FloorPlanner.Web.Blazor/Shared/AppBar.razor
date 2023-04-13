@@ -4,8 +4,14 @@
 <div/>
 
 <MudSpacer />
-
-<MudText Typo="Typo.subtitle1">@_username</MudText>
+<Microsoft.AspNetCore.Components.Authorization.AuthorizeView>
+    <Authorized>
+        <MudText Typo="Typo.subtitle1">@_username</MudText>
+    </Authorized>
+    <NotAuthorized>
+        <MudText Typo="Typo.subtitle1">Please login to use the page!</MudText>
+    </NotAuthorized>
+</Microsoft.AspNetCore.Components.Authorization.AuthorizeView>
 
 @code 
 {

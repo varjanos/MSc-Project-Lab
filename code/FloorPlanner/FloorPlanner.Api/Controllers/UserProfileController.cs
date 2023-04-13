@@ -21,7 +21,7 @@ public class UserProfileController : BaseController
     {
         await Task.CompletedTask;
 
-        return new UserProfileDto { Id = 1, Language = "", UserName = "Teszt Jakab" };
+        return new UserProfileDto { Id = 1, Language = "", UserName = "Teszt User" };
 
         /*
         if (!_currentUserContext.CurrentUserId.HasValue)
