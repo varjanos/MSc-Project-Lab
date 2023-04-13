@@ -1,14 +1,38 @@
 ﻿@inherits BaseComponent
 
+@inject IDialogService DialogService
+
+@using FloorPlanner.Web.Blazor.Components.Auth;
+@using FloorPlanner.Web.Blazor.Constants;
+@using FloorPlanner.Web.Blazor.Options;
+
 <MudNavMenu Color="Color.Primary">
-    <MudNavLink Href="/" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
+    <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
     <Microsoft.AspNetCore.Components.Authorization.AuthorizeView>
         <Authorized>
-            <MudNavLink Href="/logout" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.AppRegistration">Logout</MudNavLink>
+            <MudNavLink Href="/myplans" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.AutoStories">My plans</MudNavLink>
+            <MudNavLink Href="/logout" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Logout">Logout</MudNavLink>
         </Authorized>
         <NotAuthorized>
-            <MudNavLink Href="/login" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Login">Login</MudNavLink>
-            <MudNavLink Href="/register" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.AppRegistration">Register</MudNavLink>
+            <MudNavLink OnClick=OpenLoginDialog Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Login">Login</MudNavLink>
+            <MudNavLink OnClick=OpenRegisterDialog Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.AppRegistration">Register</MudNavLink>
         </NotAuthorized>
     </Microsoft.AspNetCore.Components.Authorization.AuthorizeView>
 </MudNavMenu>
+
+@code{
+    private void OpenLoginDialog()
+    {
+        DialogService.Show<Login>("Login", MudDialogOptions.AuthDialogOptions);
+    }
+
+    private void OpenRegisterDialog()
+    {
+        var result = DialogService.Show<Register>("Register", MudDialogOptions.AuthDialogOptions);
+
+        if (result.Result.IsCompleted)
+        {
+            DialogService.Show<Login>("Login", MudDialogOptions.AuthDialogOptions);
+        }
+    }
+}

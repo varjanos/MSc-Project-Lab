@@ -2,7 +2,6 @@
 @using FloorPlanner.Web.Blazor.Services.Authentication;
 
 @inject IAuthService authService
-@inject NavigationManager navigationManager
 
 <MudDialog>
     <DialogContent>
@@ -24,15 +23,15 @@
 </MudDialog>
 
 @code {
+    [CascadingParameter]
+    MudDialogInstance dialogReference { get; set; }
+
     private RegisterModel registerModel = new();
 
     private async Task HandleRegistrationAsync()
     {
         var result = await authService.RegisterAsync(registerModel);
 
-        if (result.Success)
-        {
-            
-        }
+        dialogReference.Close(DialogResult.Ok(result.Success));
     }
 }

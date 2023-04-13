@@ -7,12 +7,8 @@ using FloorPlanner.Bll.Mappings;
 using FloorPlanner.Dal;
 using FloorPlanner.Dal.Context;
 using FloorPlanner.Dal.Entities;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Primitives;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using System.Text.Json.Serialization;
 
 namespace FloorPlanner.Api;
@@ -92,8 +88,6 @@ public class Startup
 
         app.UseAuthentication();
         app.UseAuthorization();
-
-        app.UseMiddleware<AuthenticationMiddleware>();
 
         app.UseBlazorFrameworkFiles();
         app.UseStaticFiles();
