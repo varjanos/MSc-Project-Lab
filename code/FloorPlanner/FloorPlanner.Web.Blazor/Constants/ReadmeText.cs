@@ -35,11 +35,11 @@ Wireframes can be found on this [Figma page](https://www.figma.com/file/T7iCeyFW
 
     public static readonly string Schedule = @"### Weekly schedule
 
->4. Project specification, DB Scheme, Wireframes, Weekly schedule, Git init
+>4. ~~Project specification, DB Scheme, Wireframes, Weekly schedule, Git init~~
 
->5. Project (ASP.NET + BLazor), nswag and DB init
+>5. ~~Project (ASP.NET + BLazor), nswag and DB init~~
 
->6. Identity server based Authentication, login + registration implementation, DB scheme init
+>6. ~~Identity server based Authentication, login + registration implementation, DB scheme init~~
 
 >7. My plans page, new plan popup page implementation                                              
 
