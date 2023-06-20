@@ -13,6 +13,7 @@ public class FloorPlannerDbContext : IdentityDbContext<UserProfile>
     public virtual DbSet<Floor> Floors { get; set; }
     public virtual DbSet<Furniture> Furnitures { get; set; }
     public virtual DbSet<BuildingObject> BuildingObjects { get; set; }
+    public virtual DbSet<UserProfile> UserProfiles { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

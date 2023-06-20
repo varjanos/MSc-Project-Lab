@@ -1,0 +1,19 @@
+﻿@using Microsoft.JSInterop
+
+@inject IJSRuntime JS
+
+<div>
+    <canvas id="myCanvas" @ref="canvasRef"></canvas>
+</div>
+
+@code {
+    private ElementReference canvasRef;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("drawRectangle", canvasRef);
+        }
+    }
+}

@@ -9,6 +9,7 @@ public static partial class MapperConfig
         var config = new MapperConfiguration(cfg =>
         {
             cfg.ConfigureUserProfile();
+            cfg.ConfigurePlan();
         });
 
         config.AssertConfigurationIsValid();

@@ -2,7 +2,6 @@
 using FloorPlanner.Web.Blazor.Constants;
 using FloorPlanner.Web.Blazor.Services.DisplayError;
 using FloorPlanner.Web.Blazor.Services.Progress;
-using FloorPlanner.Web.Blazor.Services.UserProfile;
 
 namespace FloorPlanner.Web.Blazor;
 
@@ -21,6 +20,7 @@ public static class ServiceStartup
     {
         services.AddSingleton<IProgressClientService, ProgressClientService>();
         services.AddSingleton<IDisplayErrorClientService, DisplayErrorClientService>();
-        services.AddSingleton<IUserProfileClientService, UserProfileClientService>();
+
+        services.AddScoped<IPlanClient, PlanClient>();
     }
 }

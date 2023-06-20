@@ -1,4 +1,6 @@
 ﻿using FloorPlanner.Common;
+using FloorPlanner.Dal.Context;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace FloorPlanner.Api.Context;
@@ -6,7 +8,11 @@ namespace FloorPlanner.Api.Context;
 public class CurrentUserContext : ICurrentUserContext
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly FloorPlannerDbContext _dbContext;
+
     public int? _currentUserId;
+
+    public string _currentUserIdString;
     public int? CurrentUserId
     {
         get
@@ -15,23 +21,36 @@ public class CurrentUserContext : ICurrentUserContext
             {
                 return _currentUserId.Value;
             }
-            SetCurrentUserId();
+            SetCurrentUserId().GetAwaiter();
             return _currentUserId;
         }
     }
+
+    public string CurrentUserIdString
+    {
+        get
+        {
+            if (!string.IsNullOrEmpty(_currentUserIdString))
+            {
+                return _currentUserIdString;
+            }
+            SetCurrentUserId().GetAwaiter().GetResult();
+
+            return _currentUserIdString;
+        }
+    }
+
     public object UserId => CurrentUserId;
-    public CurrentUserContext(IHttpContextAccessor httpContextAccessor)
+    public CurrentUserContext(IHttpContextAccessor httpContextAccessor, FloorPlannerDbContext dbContext)
     {
         _httpContextAccessor = httpContextAccessor;
+        _dbContext = dbContext;
     }
-    private void SetCurrentUserId()
+    private async Task SetCurrentUserId()
     {
-        if (_httpContextAccessor.HttpContext?.User.Identity is ClaimsIdentity currentUser && currentUser.HasClaim(x => x.Type == CustomClaimTypes.UserId))
+        if (_httpContextAccessor.HttpContext?.User.Identity is ClaimsIdentity currentUser)
         {
-            if (int.TryParse(currentUser.Claims.First(x => x.Type.Equals(CustomClaimTypes.UserId, StringComparison.InvariantCultureIgnoreCase)).Value, out var tempCurrentUserId))
-            {
-                _currentUserId = tempCurrentUserId;
-            }
+            _currentUserIdString = (await _dbContext.UserProfiles.FirstOrDefaultAsync(x => x.UserName.Equals(currentUser.Name)))?.Id;
         }
     }
 }

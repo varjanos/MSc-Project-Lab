@@ -7,7 +7,6 @@ using FloorPlanner.Web.Blazor.Provider;
 using FloorPlanner.Web.Blazor.Services.Authentication;
 using FloorPlanner.Web.Blazor.Services.DisplayError;
 using FloorPlanner.Web.Blazor.Services.Progress;
-using FloorPlanner.Web.Blazor.Services.UserProfile;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -19,7 +18,6 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 var backendUrl = new Uri(builder.HostEnvironment.BaseAddress);
-builder.Services.AddSingleton<IInitialize>(x => x.GetService<IUserProfileClientService>());
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 

@@ -1,7 +1,17 @@
 ﻿@page "/myplans"
+@using FloorPlanner.Web.Blazor.Client;
+@using FloorPlanner.Web.Blazor.Components
+
+@inject IPlanClient _planClient
 
 <MudText Typo="Typo.h6">My plans page</MudText>
 
+<CanvasComponent></CanvasComponent>
+
 @code {
 
+    protected override async Task OnInitializedAsync()
+    {
+        var plans = await _planClient.GetMyPlansAsync();
+    }
 }

@@ -1,12 +1,14 @@
-﻿@using FloorPlanner.Web.Blazor.Services.UserProfile
-@inject IUserProfileClientService UserService
+﻿@using Microsoft.AspNetCore.Components.Authorization;
+@using System.Security.Claims;
+
+@inject AuthenticationStateProvider AuthStateProvider
 
 <div/>
 
 <MudSpacer />
 <Microsoft.AspNetCore.Components.Authorization.AuthorizeView>
     <Authorized>
-        <MudText Typo="Typo.subtitle1">@_username</MudText>
+        <MudText Typo="Typo.subtitle1">Name: @_username</MudText>
     </Authorized>
     <NotAuthorized>
         <MudText Typo="Typo.subtitle1">Please login to use the page!</MudText>
@@ -17,8 +19,13 @@
 {
     private string _username = string.Empty;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        _username = UserService.GetUserName();
+        var user = (await AuthStateProvider.GetAuthenticationStateAsync()).User.Identity as ClaimsIdentity;
+
+        if(user != null)
+        {
+            _username = user!.Name!;
+        }
     }
 }
